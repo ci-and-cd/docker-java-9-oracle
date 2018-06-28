@@ -48,8 +48,5 @@ RUN set -ex \
     && rm -rf /tmp/* /var/cache/apk/*
 
 
-#echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
-
-
 ENV JAVA_HOME ${JDK9_HOME}
 ENV PATH ${PATH}:${JAVA_HOME}/bin
