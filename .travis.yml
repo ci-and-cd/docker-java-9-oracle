@@ -1,0 +1,33 @@
+
+addons:
+  apt:
+    packages:
+    - aria2
+#before_install:
+branches:
+  only:
+  - develop
+  - master
+
+dist: trusty
+env:
+  global:
+  - IMAGE_ARG_JAVA9_VERSION_BUILD=11
+  - IMAGE_TAG_LATEST=9.0.4
+  matrix:
+  - IMAGE_ARG_JAVA9_VERSION=9.0.1 IMAGE_ARG_JAVA9_PACKAGE_DIGEST=
+  - IMAGE_ARG_JAVA9_VERSION=9.0.4 IMAGE_ARG_JAVA9_PACKAGE_DIGEST=c2514751926b4512b076cc82f959763f
+
+group: edge
+#install: true
+
+#before_script:
+script:
+- while sleep 9m; do echo "=====[ $SECONDS seconds still running ]====="; done &
+- bash build.sh
+- kill %1
+#after_script:
+
+services:
+- docker
+sudo: required
