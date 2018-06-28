@@ -39,7 +39,7 @@ RUN set -ex \
         && if [ -n "${IMAGE_ARG_JAVA9_PACKAGE_DIGEST}" ]; then JDK_URL="${JDK_URL}/${IMAGE_ARG_JAVA9_PACKAGE_DIGEST:-c2514751926b4512b076cc82f959763f}"; fi \
         && JDK_URL="${JDK_URL}/${JDK_ARCHIVE}" \
         && ${ARIA2C_DOWNLOAD} --header="Cookie: oraclelicense=accept-securebackup-cookie" -d /tmp -o ${JDK_ARCHIVE} "${JDK_URL}" \
-        && tar -xzf ${JDK_ARCHIVE} && mkdir -p $(dirname ${JDK9_HOME}) && mv /tmp/${JDK_ARCHIVE} ${JDK9_HOME} \
+        && tar -xzf ${JDK_ARCHIVE} && mkdir -p $(dirname ${JDK9_HOME}) && mv /tmp/jdk-${IMAGE_ARG_JAVA9_VERSION:-9.0.4} ${JDK9_HOME} \
         && rm -f ${JDK9_HOME}/lib/src.zip \
         && rm -f ${JDK_ARCHIVE} && rm -rf /tmp/jdk* \
     && echo ===== Export jre  ===== \
