@@ -1,10 +1,12 @@
 
-FROM alpine:3.7
+FROM cirepo/nix:2.0.4_alpine-3.7
 
 MAINTAINER haolun
 
 
-ARG IMAGE_ARG_ALPINE_MIRROR
+USER root
+
+
 ARG IMAGE_ARG_FILESERVER
 
 # see: http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase9-3934878.html
@@ -16,7 +18,6 @@ ARG IMAGE_ARG_JAVA9_VERSION_BUILD
 ARG IMAGE_ARG_JAVA9_PACKAGE_DIGEST
 
 
-ENV ARIA2C_DOWNLOAD aria2c --file-allocation=none -c -x 10 -s 10 -m 0 --console-log-level=notice --log-level=notice --summary-interval=0
 ENV JDK9_HOME /usr/lib/jvm/java-9-oracle
 ENV JRE9_HOME /usr/lib/jvm/java-9-oracle-jre
 
@@ -26,12 +27,6 @@ RUN tar xf /data/layer.tar -C /
 
 
 RUN set -ex \
-    && echo ===== Install tools ===== \
-    && touch /etc/apk/repositories \
-    && echo "https://${IMAGE_ARG_ALPINE_MIRROR:-dl-3.alpinelinux.org}/alpine/v3.7/main" > /etc/apk/repositories \
-    && echo "https://${IMAGE_ARG_ALPINE_MIRROR:-dl-3.alpinelinux.org}/alpine/v3.7/community" >> /etc/apk/repositories \
-    && echo "https://${IMAGE_ARG_ALPINE_MIRROR:-dl-3.alpinelinux.org}/alpine/edge/testing/" >> /etc/apk/repositories \
-    && apk add --update aria2 \
     && echo ===== Install JDK9 ===== \
         && cd /tmp \
         && JDK_ARCHIVE="jdk-${IMAGE_ARG_JAVA9_VERSION:-9.0.4}_linux-x64_bin.tar.gz" \
@@ -50,3 +45,6 @@ RUN set -ex \
 
 ENV JAVA_HOME ${JDK9_HOME}
 ENV PATH ${PATH}:${JAVA_HOME}/bin
+
+
+USER alpine

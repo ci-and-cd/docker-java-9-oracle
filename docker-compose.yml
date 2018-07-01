@@ -6,7 +6,6 @@ services:
       context: .
       dockerfile: Dockerfile
       args:
-      - IMAGE_ARG_ALPINE_MIRROR=${IMAGE_ARG_ALPINE_MIRROR:-mirror.tuna.tsinghua.edu.cn}
       - IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER:-http://o9wbz99tz.bkt.clouddn.com}
       - IMAGE_ARG_JAVA9_VERSION=${IMAGE_ARG_JAVA9_VERSION:-9.0.1}
       - IMAGE_ARG_JAVA9_PACKAGE_DIGEST=${IMAGE_ARG_JAVA9_PACKAGE_DIGEST}
