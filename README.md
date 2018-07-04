@@ -1,7 +1,6 @@
 # docker-java-9-oracle
 
-Smaller Oracle JDK9 on alpine linux
-see: [Smaller Java images with Alpine Linux](https://developer.atlassian.com/blog/2015/08/minimal-java-docker-containers/)
+Oracle JDK9 on alpine linux
 
 Oracle JDK9 installed at `/usr/lib/jvm/java-9-oracle` (travis-ci style JAVA_HOME)
 
@@ -20,11 +19,12 @@ so this variant is usually a very safe choice.
 ## Use this image as a “stage” in multi-stage builds
 
 ```dockerfile
+
 FROM alpine:3.7
-COPY --from=cirepo/alpine-glibc:3.7_2.25-r0 /data/layer.tar /data/layer.tar
-RUN tar xf /data/layer.tar -C /
-COPY --from=cirepo/java-9-oracle:9.0.4 /usr/lib/jvm/java-9-oracle /usr/lib/jvm/java-9-oracle
-COPY --from=cirepo/java-9-oracle:9.0.4 /usr/lib/jvm/java-9-oracle-jre /usr/lib/jvm/java-9-oracle-jre
+COPY --from=cirepo/alpine-glibc:3.7_2.25-r0-archive /data/root /
+COPY --from=cirepo/java-9-oracle:9.0.4-archive /data/root/usr/lib/jvm/java-9-oracle /usr/lib/jvm/java-9-oracle
+COPY --from=cirepo/java-9-oracle:9.0.4-archive /data/root/usr/lib/jvm/java-9-oracle-jre /usr/lib/jvm/java-9-oracle-jre
+
 ```
 
 ## Java9 and glibc issues on alpine
