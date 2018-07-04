@@ -1,12 +1,25 @@
 
 version: '2.1'
 services:
-  java-9-oracle:
+  #docker-compose build image
+  image:
     build:
-      context: .
+      context: image
       dockerfile: Dockerfile
       args:
       - IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER:-http://o9wbz99tz.bkt.clouddn.com}
       - IMAGE_ARG_JAVA9_VERSION=${IMAGE_ARG_JAVA9_VERSION:-9.0.1}
       - IMAGE_ARG_JAVA9_PACKAGE_DIGEST=${IMAGE_ARG_JAVA9_PACKAGE_DIGEST}
-    image: ${IMAGE_PREFIX:-cirepo}/java-9-oracle:${IMAGE_TAG:-9.0.1}
+    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-java-9-oracle}:${IMAGE_TAG:-9.0.1}
+  #docker-compose build dumper
+  dumper:
+    build:
+      context: dumper
+      dockerfile: Dockerfile_dumper
+    image: tmp/dumper:latest
+  #docker-compose build archive
+  archive:
+    build:
+      context: .
+      dockerfile: Dockerfile_archive
+    image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-java-9-oracle}:${IMAGE_TAG:-8u171}-archive
