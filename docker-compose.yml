@@ -7,7 +7,8 @@ services:
       context: image
       dockerfile: Dockerfile
       args:
-      - IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER:-http://o9wbz99tz.bkt.clouddn.com}
+      - IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER}
+      #- IMAGE_ARG_FILESERVER=${IMAGE_ARG_FILESERVER:-http://o9wbz99tz.bkt.clouddn.com}
       - IMAGE_ARG_JAVA9_VERSION=${IMAGE_ARG_JAVA9_VERSION:-9.0.1}
       - IMAGE_ARG_JAVA9_PACKAGE_DIGEST=${IMAGE_ARG_JAVA9_PACKAGE_DIGEST}
     image: ${IMAGE_PREFIX:-cirepo}/${IMAGE_NAME:-java-9-oracle}:${IMAGE_TAG:-9.0.1}
