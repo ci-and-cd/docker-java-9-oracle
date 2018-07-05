@@ -11,9 +11,11 @@ ARG IMAGE_ARG_FILESERVER
 # http://download.oracle.com/otn/java/jdk/9.0.1+11/jdk-9.0.1_linux-x64_bin.tar.gz?AuthParam=${auth_param}
 # http://download.oracle.com/otn/java/jdk/9.0.4+11/c2514751926b4512b076cc82f959763f/jdk-9.0.4_linux-x64_bin.tar.gz?AuthParam=${auth_param}
 # jdk-9.0.4_linux-x64_bin.tar.gz sha256: 90c4ea877e816e3440862cfa36341bc87d05373d53389ec0f2d54d4e8c95daa2 #sha256sum -c /data/jdk-9.0.4_linux-x64_bin.tar.gz.sha256
+# http://ftp.osuosl.org/pub/funtoo/distfiles/oracle-java/
+# http://funtoo.neu.edu.cn/funtoo/distfiles/oracle-java/
 ARG IMAGE_ARG_JAVA9_VERSION
 ARG IMAGE_ARG_JAVA9_VERSION_BUILD
-ARG IMAGE_ARG_JAVA9_PACKAGE_DIGEST
+#ARG IMAGE_ARG_JAVA9_PACKAGE_DIGEST
 
 
 ENV JDK9_HOME /usr/lib/jvm/java-9-oracle
@@ -31,11 +33,8 @@ COPY --chown=root:root docker /data
 RUN set -ex \
   && echo ===== Install JDK9 ===== \
   && JDK_ARCHIVE="jdk-${IMAGE_ARG_JAVA9_VERSION:-9.0.4}_linux-x64_bin.tar.gz" \
-  && JDK_URL="${IMAGE_ARG_FILESERVER:-http://download.oracle.com}/otn/java/jdk/${IMAGE_ARG_JAVA9_VERSION:-9.0.4}+${IMAGE_ARG_JAVA9_VERSION_BUILD:-11}" \
-  && if [ -n "${IMAGE_ARG_JAVA9_PACKAGE_DIGEST}" ]; then JDK_URL="${JDK_URL}/${IMAGE_ARG_JAVA9_PACKAGE_DIGEST:-c2514751926b4512b076cc82f959763f}"; fi \
-  && JDK_URL="${JDK_URL}/${JDK_ARCHIVE}" \
   && if [ ! -f /data/${JDK_ARCHIVE} ]; then \
-       ${ARIA2C_DOWNLOAD} --header="Cookie: oraclelicense=accept-securebackup-cookie" -d /data -o ${JDK_ARCHIVE} "${JDK_URL}"; \
+       ${ARIA2C_DOWNLOAD} -d /data -o ${JDK_ARCHIVE} http://ftp.osuosl.org/pub/funtoo/distfiles/oracle-java/${JDK_ARCHIVE} \
      fi \
   && tar -xzf /data/${JDK_ARCHIVE} -C /data && mkdir -p $(dirname ${JDK9_HOME}) && mv /data/jdk-${IMAGE_ARG_JAVA9_VERSION:-9.0.4} ${JDK9_HOME} \
   && rm -f ${JDK9_HOME}/lib/src.zip \
@@ -60,3 +59,10 @@ ENV JAVA_HOME ${JDK9_HOME}
 
 
 USER alpine
+
+#  && JDK_URL="${IMAGE_ARG_FILESERVER:-http://download.oracle.com}/otn/java/jdk/${IMAGE_ARG_JAVA9_VERSION:-9.0.4}+${IMAGE_ARG_JAVA9_VERSION_BUILD:-11}" \
+#  && if [ -n "${IMAGE_ARG_JAVA9_PACKAGE_DIGEST}" ]; then JDK_URL="${JDK_URL}/${IMAGE_ARG_JAVA9_PACKAGE_DIGEST:-c2514751926b4512b076cc82f959763f}"; fi \
+#  && JDK_URL="${JDK_URL}/${JDK_ARCHIVE}" \
+#  && if [ ! -f /data/${JDK_ARCHIVE} ]; then \
+#       ${ARIA2C_DOWNLOAD} --header="Cookie: oraclelicense=accept-securebackup-cookie" -d /data -o ${JDK_ARCHIVE} "${JDK_URL}"; \
+#     fi \
