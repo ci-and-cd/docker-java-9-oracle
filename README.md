@@ -22,8 +22,8 @@ so this variant is usually a very safe choice.
 
 FROM alpine:3.7
 COPY --from=cirepo/alpine-glibc:3.7_2.25-r0-archive /data/root /
-COPY --from=cirepo/java-9-oracle:9.0.4-archive /data/root/usr/lib/jvm/java-9-oracle /usr/lib/jvm/java-9-oracle
-COPY --from=cirepo/java-9-oracle:9.0.4-archive /data/root/usr/lib/jvm/java-9-oracle-jre /usr/lib/jvm/java-9-oracle-jre
+COPY --from=cirepo/java-oracle:9.0.4-archive /data/root/usr/lib/jvm/java-9-oracle /usr/lib/jvm/java-9-oracle
+COPY --from=cirepo/java-oracle:9.0.4-archive /data/root/usr/lib/jvm/java-9-oracle-jre /usr/lib/jvm/java-9-oracle-jre
 
 ```
 
