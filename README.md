@@ -20,7 +20,7 @@ so this variant is usually a very safe choice.
 
 ```dockerfile
 
-FROM alpine:3.7
+FROM alpine:3.8
 COPY --from=cirepo/glibc:2.25-r0-alpine-3.8-archive /data/root /
 COPY --from=cirepo/java-oracle:9.0.4-alpine-3.8-archive /data/root/usr/lib/jvm/java-9-oracle /usr/lib/jvm/java-9-oracle
 COPY --from=cirepo/java-oracle:9.0.4-alpine-3.8-archive /data/root/usr/lib/jvm/java-9-oracle-jre /usr/lib/jvm/java-9-oracle-jre
