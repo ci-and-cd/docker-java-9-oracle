@@ -34,7 +34,7 @@ RUN set -ex \
   && echo ===== Install JDK9 ===== \
   && JDK_ARCHIVE="jdk-${IMAGE_ARG_JAVA9_VERSION:-9.0.4}_linux-x64_bin.tar.gz" \
   && if [ ! -f /data/${JDK_ARCHIVE} ]; then \
-       ${ARIA2C_DOWNLOAD} -d /data -o ${JDK_ARCHIVE} http://ftp.osuosl.org/pub/funtoo/distfiles/oracle-java/${JDK_ARCHIVE}; \
+       ${ARIA2C_DOWNLOAD} -d /data -o ${JDK_ARCHIVE} http://fileserver.infra.top/java9/${JDK_ARCHIVE}; \
      fi \
   && tar -xzf /data/${JDK_ARCHIVE} -C /data && mkdir -p $(dirname ${JDK9_HOME}) && mv /data/jdk-${IMAGE_ARG_JAVA9_VERSION:-9.0.4} ${JDK9_HOME} \
   && rm -f ${JDK9_HOME}/lib/src.zip \
